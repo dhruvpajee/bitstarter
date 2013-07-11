@@ -38,10 +38,6 @@ var assertFileExists = function(infile) {
     return instr;
 };
 
-var dummy = function(inpath) {
-    		console.log('Dummy');
-}
-
 var cheerioHtmlFile = function(htmlfile) {
     return cheerio.load(fs.readFileSync(htmlfile));
 };
@@ -78,7 +74,8 @@ var checkUrlPath = function(urlPath, checksfile) {
         		out[checks[ii]] = present;
     		}
 		debugger;
-		console.log(out);
+		var outJson = JSON.stringify(out, null, 4);
+		console.log(outJson);
     		return out;
         }
 });
@@ -99,15 +96,15 @@ if(require.main == module) {
 	.parse(process.argv);
 	if(program.url)
 	{
-		debugger;
 		checkUrlPath(program.url, program.checks);
 	}
 	else if(program.file)
 	{
     		var checkJson = checkHtmlFile(program.file, program.checks);
+		var outJson = JSON.stringify(checkJson, null, 4);
+		console.log(outJson);
 	} 
-	var outJson = JSON.stringify(checkJson, null, 4);
-    	console.log(outJson);
+	
 	} else {
     exports.checkHtmlFile = checkHtmlFile;
 }
